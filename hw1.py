@@ -25,27 +25,55 @@ def xorC (m,k):
     #we use the same method for encription and decription of the message
     return "".join(chr(ord(a)^ord(b)) for a,b in zip (k,m))
     
-def cipher(message):
+def cipher(numMess):
     keyfile = open ('keys','r')
-    key = keyfile.readline()
-    messageFile = open('messages','a')
-    messageFile.write(xorC(key,message)+'\n')
-    messageFile.close()   
+    messageFile = open('messages','wb')
+    j=0
+    while j < int(numMess):
+        message = raw_input('Enter message'+str(j)+':')
+        key = keyfile.readline()
+        
+        messageFile.write(xorC(message,key)+'\n')
+        j+=1
+        print message
+    messageFile.close()
+    keyfile.close()
     
-def decipher():
+def decipher(num):
     keyfile = open('keys','r')
-    key = keyfile.readline()
+    keyFileLines = keyfile.readlines()
+    keyfile.close()
+    
     messageFile = open('messages','r')
-    cMessage = messageFile.readline()
+    messageFileLines = messageFile.readlines()
+    messageFile.close()
+
+    cMessage = messageFileLines[int(num)]
+    key = keyFileLines[int(num)]
     message = xorC(key,cMessage)
     
+    messageFile = open('messages','w')
+    keyfile = open('keys','w')
+    
+    j = 0
+    for line in messageFileLines:
+        if (j) != num:
+            messageFile.write(line)
+        j += 1
+    
+    j = 0
+    for line in keyFileLines:
+        if (j) != num:
+            keyfile.write(line)
+        j += 1
+
     print message
 
 def main(argv):
     print 'Number of arguments:', len(sys.argv), 'arguments.'
     print 'Argument List:', str(sys.argv)
     try:
-        opts, args = getopt.getopt(argv,"he:k:d",["encrypt=","genKey="])
+        opts, args = getopt.getopt(argv,"he:k:d:",["encrypt=","genKey=","decrypt"])
     except getopt.GetoptError:
         print 'otp -e <encrypt> -k <genKey>'
         sys.exit(2)
@@ -53,14 +81,15 @@ def main(argv):
         if opt == '-h':
             print 'otp -e <encrypt> -k <generatekey>'
             sys.exit()
-        elif opt == '-d':
-            decipher()
+        elif opt in ("-d","--decrypt"):
+            num =int(arg)-1
+            decipher(num)
         elif opt in ("-e", "--encrypt"):
             print 'encrypt'
-            message = arg 
-            cipher(message)
+            numMess = arg 
+            cipher(numMess)
     #       inputfile = arg
-        elif opt in ("-k", "--key"):
+        elif opt in ("-k", "--genKey"):
             padLength = arg
             numKeys = argv[2]
             print 'generate key'
