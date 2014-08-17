@@ -30,7 +30,7 @@ def cipher(numMess):
     messageFile = open('messages','wb')
     j=0
     while j < int(numMess):
-        message = raw_input('Enter message'+str(j)+':')
+        message = raw_input('Enter message'+str(j+1)+':')
         key = keyfile.readline()
         
         messageFile.write(xorC(message,key)+'\n')
@@ -70,8 +70,8 @@ def decipher(num):
     print message
 
 def main(argv):
-    print 'Number of arguments:', len(sys.argv), 'arguments.'
-    print 'Argument List:', str(sys.argv)
+    #print 'Number of arguments:', len(sys.argv), 'arguments.'
+    #print 'Argument List:', str(sys.argv)
     try:
         opts, args = getopt.getopt(argv,"he:k:d:",["encrypt=","genKey=","decrypt"])
     except getopt.GetoptError:
