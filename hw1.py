@@ -75,11 +75,11 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv,"he:k:d:",["encrypt=","genKey=","decrypt"])
     except getopt.GetoptError:
-        print 'otp -e <encrypt> -k <genKey>'
+        print '-k <lenght> <# of keys> -e <# of messages> -d <index of message>'
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'otp -e <encrypt> -k <generatekey>'
+            print '-k <lenght> <# of keys> -e <# of messages> -d <index of message>'
             sys.exit()
         elif opt in ("-d","--decrypt"):
             num =int(arg)-1
