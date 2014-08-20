@@ -28,7 +28,7 @@ def cipher(numMess):
     messageFile = open('messages','wb')
     j=0
     while j < int(numMess):
-        message = raw_input('Enter message'+str(j)+':')
+        message = raw_input('Enter message'+str(j+1)+':')
         key = keyfile.readline()
         
         messageFile.write(xorC(message,key)+'\n')
@@ -68,14 +68,17 @@ def decipher(num):
     print message
 
 def main(argv):
+
+    #print 'Number of arguments:', len(sys.argv), 'arguments.'
+    #print 'Argument List:', str(sys.argv)
     try:
         opts, args = getopt.getopt(argv,"he:k:d:",["encrypt=","genKey=","decrypt"])
     except getopt.GetoptError:
-        print '\n-e <# of messages to encript> \n -k <# of keys to generate> <lenght of the keys> \n -d <message index>'
+        print '-k <lenght> <# of keys> -e <# of messages> -d <index of message>'
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print '-e <# of messages to encript> \n -k <pad length> <# of keys> \n -d <message index>'
+            print '-k <lenght> <# of keys> \n -e <# of messages> \n -d <index of message>'
             sys.exit()
         elif opt in ("-d","--decrypt"):
             num =int(arg)-1
