@@ -12,7 +12,7 @@ def genRandom (padLength,numKey):
     while i < int(numKey):
         key=''
         for j in range(0,int(padLength)):
-            key = key + random.choice(string.ascii)
+            key = key + random.choice(string.ascii_letters)
         keyfile.write(key+'\n')
         print "ord"+ key
         i+=1
@@ -33,7 +33,7 @@ def cipher(numMess):
         
         messageFile.write(xorC(message,key)+'\n')
         j+=1
-        print message
+        #print message
     messageFile.close()
     keyfile.close()
     
@@ -68,9 +68,6 @@ def decipher(num):
     print message
 
 def main(argv):
-
-    #print 'Number of arguments:', len(sys.argv), 'arguments.'
-    #print 'Argument List:', str(sys.argv)
     try:
         opts, args = getopt.getopt(argv,"he:k:d:",["encrypt=","genKey=","decrypt"])
     except getopt.GetoptError:
